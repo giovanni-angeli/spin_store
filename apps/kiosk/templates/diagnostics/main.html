@@ -1,0 +1,177 @@
+{% load static i18n %}
+<!DOCTYPE HTML>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="utf-8">
+    <title>{% trans 'Diagnostics' %}</title>
+
+    <script src="{% static "navigator/js/page.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "diagnostics/css/main.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "diagnostics/css/reset.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'suit/css/suit.css' %}" media="all">
+
+    <script type="text/javascript" src="{% static 'js/sprintf.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/underscore-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/d3.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'js/d3.tip.js' %}" ></script>
+
+</head>
+<body id="page_auth">
+    <header>
+    </header>
+    <main>
+        <div id="content">{% include "diagnostics/page_auth.html" %}</div>
+    </main>
+    <footer>
+        <div>
+            <img id="footer-logo" src="{% static "diagnostics/img/logo.png" %}" width="220" draggable="false">
+            <div>
+                <a id="footer-page-left-arrow" >&nbsp;</a>
+                <p id="footer-step">
+                    {% trans "Authorization required" %}
+                </p>
+                <a href="#" id="footer-page-right-arrow" class="ui-disabled">&nbsp;</a>
+            </div>
+        </div>
+    </footer>
+    <div id="status" class="hidden clearfix">
+        <div id="status-info"></div>
+        <button id="status-close">{% trans "Close" %}</button>
+        <button id="status-dismiss">{% trans "Dismiss" %}</button>
+        <button id="status-diagnostics">{% trans "Diagnostics" %}</button>
+    </div>
+
+    <script src="{% static "bootstrap/jquery-1.11.1.min.js" %}"></script>
+    <script src="{% static 'js/validate.min.js' %}"></script>
+    <script src="{% static "diagnostics/js/diagnostics.js" %}"></script>
+
+    <!-- initial setup -->
+    <script>
+        // setup needed for POST requests
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            }
+        });
+
+        $(document).ready(function() {
+
+            // Initialize Timeout manager
+            Diagnostics.Timeout.init(function() {
+
+                if ('{{ diag_mode }}' === 'default') {
+                    window.location.href = '{% url "kiosk:diagnostics-exit" %}';
+                }
+                else {
+                    /* Reserved for debugging of the actuators firmware */
+                    Diagnostics.Pages.force_cold_reset();
+                }
+            }, {{ timeout }});
+            $(document)
+                    .on('click', Diagnostics.Timeout.clear);
+
+            // Initialize diagnostic app
+            Diagnostics.Pages.init({
+
+                language: '{{ LANGUAGE_CODE }}',
+
+                // JSON-ized configuration data structure, forwarded to JS code (see view diag_main)
+                config: '{{ config }}',
+
+                // Status polling interval
+                millis: {{ millis }},
+
+                // Diagnostics timeout
+                timeout: {{ diag_timeout }},
+
+                // URL lookup map, useful to avoid ugly hard-coded URLs in JS code
+                urls: {
+                    // commands (used in page_main)
+                    kiosk      : '{% url "kiosk:main" %}',
+                    exit       : '{% url "kiosk:diagnostics-exit" %}',
+                    reset      : '{% url "kiosk:diagnostics-reset" %}',
+                    status     : '{% url "kiosk:diagnostics-status" %}',
+
+                    autocap_open  : '{% url "devices:machine-ac-open" %}',
+                    autocap_close : '{% url "devices:machine-ac-close" %}',
+
+                    canlifter_extend  : '{% url "devices:machine-cl-extend" %}',
+                    canlifter_retract : '{% url "devices:machine-cl-retract" %}',
+
+                    enter_diagnostic : '{% url "devices:machine-enter-diagnostic" %}',
+
+                    auto_purge : '{% url "kiosk:diagnostics-auto-purge" %}',
+                    label_feed : '{% url "devices:labeler-feed" %}',
+
+                    // positioning commands (used in page_carriage)
+                    pos_withdrawal : '{% url "devices:machine-withdrawal-position" %}',
+                    pos_filling    : '{% url "devices:machine-filling-position" %}',
+                    pos_capping    : '{% url "devices:machine-capping-position" %}',
+                    pos_discharge  : '{% url "devices:machine-discharge-position" %}',
+                    pos_home       : '{% url "devices:machine-home-position" %}',
+
+                    // action commands (used in page_carriage)
+                    act_withdrawal : '{% url "devices:machine-withdrawal" %}',
+                    act_cap        : '{% url "devices:machine-capping" %}',
+
+                    // circuit diagnostic commands
+                    circuit_levels: [{% for id in circuits %}
+                            '{% url "kiosk:diagnostics-circuit-levels" id %}',{% endfor %}
+                    ],
+                    circuit_refill: [{% for id in circuits %}
+                            '{% url "kiosk:diagnostics-circuit-refill" id %}',{% endfor %}
+                    ],
+                    circuit_purge_volume: [{% for id in circuits %}
+                            '{% url "kiosk:diagnostics-circuit-purge-volume" id %}',{% endfor %}
+                    ],
+                    circuit_manual_purge: [{% for id in circuits %}
+                            '{% url "kiosk:diagnostics-circuit-manual-purge" id %}',{% endfor %}
+                    ],
+
+                    // low-level circuit commands
+                    circuit_settings: [{% for id in circuits %}
+                            '{% url "kiosk:diagnostics-circuit-settings" id %}',{% endfor %}
+                    ],
+                    circuit_recirculation_setup: [{% for id in circuits %}
+                            '{% url "kiosk:diagnostics-setup-recirculation" id %}',{% endfor %}
+                    ],
+                    circuit_recirculation_control: [{% for id in circuits %}
+                            '{% url "kiosk:diagnostics-control-recirculation" id %}',{% endfor %}
+                    ],
+                    circuit_stirring_control: [{% for id in circuits %}
+                            '{% url "kiosk:diagnostics-control-stirring" id %}',{% endfor %}
+                    ]
+                }
+            });
+
+            // Initialize keyboard
+            Diagnostics.Keyboard.init(function(evt) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'kiosk:diagnostics-auth' %}',
+                    data: {
+                        password: Diagnostics.Keyboard.text(),
+                    }
+                }).then(function(data) {
+                    Diagnostics.Pages.main(data);
+                }).always(Diagnostics.Keyboard.clear);
+            });
+
+            $('#footer-page-left-arrow')
+                    .off()
+                    .on('click', function(e) {
+                        e.preventDefault();
+                        Diagnostics.Pages.exit();
+                    });
+
+            $('#footer-page-right-arrow')
+                    .off()
+                    .on('click', function(e) {
+                        e.preventDefault();
+                        $('#passwd-confirm')
+                                .click();
+                    });
+        });
+    </script>
+</body>
+</html>

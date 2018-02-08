@@ -1,0 +1,98 @@
+{% load i18n static %}
+<style>
+    input[type='button'] {
+        border: thin;
+        outline: none;
+
+        font-variant: small-caps;
+        font-size: 18px;
+    }
+    input[type='button']:active {
+        background: whitesmoke;
+    }
+
+    #status-overlay {
+        background: whitesmoke;
+        padding:5px;
+        border:black;
+        border-style: solid;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        border-width: thin;
+        position: relative;
+        width: 220px;
+        top: +10px;
+        left: 740px;
+    }
+
+    #carriage {
+        position: relative;
+        top: 220px;
+        left: 40px;
+    }
+
+     #commands {
+         position: relative;
+         top: -180px;
+         left: 140px;
+         width: 100px;
+     }
+
+    #additional {
+        position: absolute;
+         top: 302px;
+         right: 75px;
+         width: 100px;
+    }
+
+</style>
+<div id="status-overlay">
+    <h2><span id="status-level">Gathering data...</span></h2>
+    <div class="err-code" id="err-code">&nbsp;</div>
+</div>
+<div id="carriage-overlay">
+    <div id="carriage">
+        <div>
+            <input type="button" id="reset" class="crg" value="{% trans 'Reset' %}" />
+            <br/>
+
+            <input type="button" id="withdrawal1" disabled class="crg-4 btn-disabled" value="{% trans 'Withdrawal 1' %}" />
+            <input type="button" id="withdrawal2" disabled class="crg-4 btn-disabled" value="{% trans 'Withdrawal 2' %}" />
+            <input type="button" id="withdrawal3" disabled class="crg-4 btn-disabled" value="{% trans 'Withdrawal 3' %}" />
+            <input type="button" id="withdrawal4" disabled class="crg-4 btn-disabled" value="{% trans 'Withdrawal 4' %}" />
+            <br/>
+
+            <input type="button" id="filling" disabled class="crg btn-disabled" value="{% trans 'Filling' %}" />
+            <br/>
+
+            <input type="button" id="capping1" disabled class="crg-2 btn-disabled" value="{% trans 'Capping 1' %}" />
+            <input type="button" id="capping2" disabled class="crg-2 btn-disabled" value="{% trans 'Capping 2' %}" />
+            <br/>
+
+            <input type="button" id="negative" disabled class="crg-2 btn-disabled" value="{% trans 'Negative discharge' %}" />
+            <input type="button" id="positive" disabled class="crg-2 btn-disabled" value="{% trans 'Positive discharge' %}" />
+
+            <input type="button" id="home" disabled class="crg btn-disabled" value="{% trans 'Home' %}" />
+        </div>
+    </div>
+    <div id="commands">
+        <input type="button" id="load1" disabled class="crg-4 btn-disabled" value="{% trans 'Load 1' %}" />
+        <input type="button" id="load2" disabled class="crg-4 btn-disabled" value="{% trans 'Load 2' %}" />
+        <input type="button" id="load3" disabled class="crg-4 btn-disabled" value="{% trans 'Load 3' %}" />
+        <input type="button" id="load4" disabled class="crg-4 btn-disabled" value="{% trans 'Load 4' %}" />
+        <br />
+        <br />
+        <input type="button" id="cap1" disabled class="crg-4 btn-disabled" value="{% trans 'Cap 1' %}" />
+        <input type="button" id="cap2" disabled class="crg-4 btn-disabled" value="{% trans 'Cap 2' %}" />
+    </div>
+    <div id="additional">
+        <input type="button" id="ac_open" class="crg-4 btn-disabled" value="{% trans 'Open AutoCap' %}" />
+        <input type="button" id="ac_close" class="crg-4 btn-disabled" value="{% trans 'Close AutoCap' %}" />
+        <br />
+        <br />
+        <br />
+        <input type="button" id="cl_extend" class="crg-4 btn-disabled" value="{% trans 'Extend Lifter' %}" />
+        <input type="button" id="cl_retract" class="crg-4 btn-disabled" value="{% trans 'Retract Lifter' %}" />
+    </div>
+</div>

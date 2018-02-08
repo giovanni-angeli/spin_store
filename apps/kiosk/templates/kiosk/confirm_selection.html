@@ -1,0 +1,80 @@
+{% load i18n %}
+
+<div class="content default">
+    <span class="confirmation-page">
+        <div id="left-bar">
+            <div>
+                <a href="#" id="button-no">
+                    <h3>{% trans 'No' %},</h3>
+                    <p>{% trans 'choose another color' %}</p>
+                </a>
+            </div>
+        </div>
+
+        {% if available %}
+            <div id="right-bar">
+                <div>
+                    <div>{% trans 'Is it the right color?' %}</div>
+                    <br>
+                    <div id="color-box">
+                        <div id="color-code">&nbsp;</div>
+                        <div id="color-description">&nbsp;</div>
+                    </div>
+                    {% if payment %}
+                        {% if not granted %}
+                            <a href="#" id="button-yes">
+                                <h3>{% trans 'Yes' %},</h3>
+                                <p>{% trans 'insert sufficient credit to dispense the color' %}</p>
+                            </a>
+                        {% else %}
+                            <a href="#" id="button-yes">
+                                <h3>{% trans 'Yes' %},</h3>
+                                <p>{% trans 'proceed and dispense the color' %}</p>
+                            </a>
+                        {% endif %} {# granted? #}
+                    {% else %}
+                        <a href="#" id="button-yes">
+                            <h3>{% trans 'Yes' %},</h3>
+                            <p>{% trans 'dispense the color' %}</p>
+                        </a>
+                    {% endif %} {# payment? #}
+                </div>
+            </div>
+        {% else %}
+            <div id="right-bar">
+                <div>
+                    <div>{% trans 'This color is currently not available' %}</div>
+                    <br>
+                    <div id="color-box">
+                        <div id="color-code">&nbsp;</div>
+                        <div id="color-description">&nbsp;</div>
+                    </div>
+                    <br>
+                    <br>
+                    <p>{% trans 'Please pick a different color' %}</p>
+                </div>
+            </div>
+        {% endif %} {# available? #}
+        <div id="triangle"></div>
+    </span>
+</div>
+
+
+<div id="messages">
+    <div class="footer-step default">
+        {% if available and not granted %}
+            {% if payment %}
+                {% trans 'Insert more credit to proceed' %}
+            {% else %}
+                {% trans 'Confirm your color choice' %}
+            {% endif %}
+
+        {% elif not available %}
+            {% trans 'Pick a different color' %}
+
+        {% elif available and granted %}
+            {% trans 'Proceed to dispensation' %}
+        {% endif %}
+    </div>
+</div>
+

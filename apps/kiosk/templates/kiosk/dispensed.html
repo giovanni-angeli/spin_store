@@ -1,0 +1,41 @@
+{% load i18n %}
+
+<div class="content default">
+    <span class="confirmation-page">
+        <div id="left-bar">
+            <div>
+                <a href="#" id="button-no">
+                    <h3>{% trans 'Yes' %},</h3>
+                    <p>{% trans 'choose another color' %}</p>
+                </a>
+            </div>
+        </div>
+        <div id="right-bar">
+            <div>
+                <div>{% trans 'Thank you for choosing us' %},</div>
+                <div>{% trans 'would you like another sample?' %}</div>
+                <div></div>
+                <div id="color-box">
+                    <div id="color-code">&nbsp;</div>
+                    <div id="color-description">&nbsp;</div>
+                </div>
+                <a href="#" id="button-yes">
+                    <h3>{% trans 'No' %},</h3>
+                    <p>{% trans 'shake and enjoy your sample' %}</p>
+                </a>
+            </div>
+        </div>
+        <div id="triangle"></div>
+    </span>
+</div>
+
+
+<div id="messages">
+    <div class="footer-step default">
+        {% trans "Collect your sample" %}
+        <br/>
+        {% trans "and shake it before use" %}
+    </div>
+</div>
+
+

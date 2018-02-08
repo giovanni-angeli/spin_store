@@ -1,0 +1,33 @@
+{% load i18n static %}
+<style>
+    input[type='button'] {
+        border: thin;
+        outline: none;
+
+        font-variant: small-caps;
+        font-size: 18px;
+    }
+
+    input[type='button']:active {
+        background: whitesmoke;
+    }
+</style>
+<div id="synoptic">
+    {% include "diagnostics/synoptic.inc.svg" %}
+</div>
+<div id="status-overlay">
+    <h2><span id="status-level">{% trans "Gathering data" %}...</span></h2>
+    <div class="err-code" id="err-code">&nbsp;</div>
+</div>
+<div id="command-overlay">
+    <div id="command">
+        <div style="width: 300px;">
+            <input type="button" id="ac_open" class="btn-small" value="{% trans 'Open AutoCap' %}" />
+            <input type="button" id="ac_close" class="btn-small" value="{% trans 'Close AutoCap' %}" />
+            <input type="button" id="autopurge" class="btn" value="{% trans 'Automatic Purge' %}" />
+            <input type="button" id="label-feed" class="btn" value="{% trans 'Label Feed' %}" />
+            <div style="height: 120px"></div>
+            <input type="button" id="reset" class="btn" value="{% trans 'Reset' %}" />
+        </div>
+    </div>
+</div>
