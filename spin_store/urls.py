@@ -15,13 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from apps.dashbd.views import main as main_db
+import spin_store.frontend.views
 
-from apps.kiosk.urls import urlpatterns
+
+print ("admin.site.urls:{}".format(admin.site.urls))
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', main_db, name='dashbd'),
-    # ~ url(r'^kiosk/', include('apps.kiosk.urls', namespace='kiosk')),
-    url(r'^kiosk/', include(urlpatterns, namespace="kiosk")),
+    url(r'^$', spin_store.frontend.views.main, name='frontend'),
 ]

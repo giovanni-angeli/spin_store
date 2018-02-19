@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- derived from: https://getbootstrap.com/docs/3.3/examples/starter-template/ -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/img/favicon.ico">
+
+    <title>Starter Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- jQuery UI theme or Bootstrap (optional, if you create a custom theme) -->
+    <link href="/static/css/jquery-ui.min.css" rel="stylesheet">
+
+    <!-- css for the preview keyset extension -->
+    <link href="/static/css/keyboard-previewkeyset.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="/static/css/main.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <div class="container theme-showcase" role="main">
+        <header class="header">
+          <div class="page-header">
+            <h1>Header</h1>
+          </div>
+        </header>
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+
+    <!-- jQuery UI position utility (optional, if you position the keyboard yourself) -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+
+    <!-- keyboard widget css & script -->
+    <link href="/static/css/keyboard.css" rel="stylesheet">
+    <script src="/static/js/jquery.keyboard.js"></script>
+    <!-- keyboard optional extensions - include ALL (includes mousewheel) -->
+    <!-- <script src="js/jquery.keyboard.extension-all.js"></script> -->
+
+    <script>
+      $(function(){
+        $('#keyboard').keyboard();
+//~         console.log("$('#keyboard').getkeyboard()", $('#keyboard').getkeyboard()); 
+        $('#keyboard').getkeyboard().reveal();
+      });
+    </script>
+    
+  </body>
+</html>

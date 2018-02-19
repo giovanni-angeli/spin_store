@@ -1,0 +1,57 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+{% block extrahead %}
+
+    <style>
+        #editor_notes {
+          padding-bottom: 10px;
+          max-width: 500px;
+          color: #DA2D0F;
+        }
+    </style>
+
+    <script type="text/javascript" src="/static/js/jsoneditor.min.js"></script>
+{% endblock %}
+
+
+{% block after_field_sets %} {% endblock %}
+
+
+{% block after_related_objects %}
+    
+    <input id='params_content' name="params_content" type="hidden" value="{}" />
+    <table>
+        <tr><td id='editor_section_title'><h2>{{ editor_section_title }}</h2></td></tr>
+        <tr><td><h2>{% trans 'Parameters' %}</h2></td></tr>
+        <tr><td id='editor_holder'></td></tr>
+    </table>
+
+    <script>
+        var _jsonschema = {{ jsonschema }};
+        var _params = {{ params }};
+    
+        var editor = new JSONEditor(document.getElementById('editor_holder'),{
+            schema: _jsonschema,
+            startval: _params,
+            show_errors: 'always',
+            theme: 'jqueryui',
+            disable_collapse: true, 
+            disable_edit_json: true, 
+            disable_properties: false, 
+//~             form_name_root: 'parameters',
+        });
+        
+        var put_params_into_form = function() {
+            var params = editor.getValue();
+            if (typeof (params ) === 'object') {
+                document.getElementById('params_content').value = JSON.stringify(params);
+            }
+        };
+        
+        document.getElementsByName("_save")[0].addEventListener('click', put_params_into_form);
+        document.getElementsByName("_continue")[0].addEventListener('click', put_params_into_form);
+        document.getElementsByName("_addanother")[0].addEventListener('click', put_params_into_form);
+        
+    </script>
+{% endblock %}
+

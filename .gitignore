@@ -3,4 +3,4 @@
 *__pycache__
 db.sqlite3
 /static
-_my_stash
+.my_stash

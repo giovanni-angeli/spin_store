@@ -39,10 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'orm',
-    'apps.fermions',
-    'apps.bosons',
-    'apps.dashbd',
-    'apps.kiosk',
+    'spin_store.frontend',
+    'spin_store.administration',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +58,7 @@ ROOT_URLCONF = 'spin_store.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "spin_store", "templates"),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +80,7 @@ WSGI_APPLICATION = 'spin_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'test', 'db.sqlite3'),
     }
 }
 
@@ -126,8 +124,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "apps", "static"),
+    os.path.join(BASE_DIR, "spin_store", "frontend", "static"),
+    os.path.join(BASE_DIR, "spin_store", "static"),
 ]
 
 REDIS_URL = 'redis://localhost:6379/0'
+
+def ugettext_lazy(s):
+    return s
 
