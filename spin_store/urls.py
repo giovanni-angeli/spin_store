@@ -17,9 +17,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 import spin_store.frontend.views
 
-
-print ("admin.site.urls:{}".format(admin.site.urls))
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', spin_store.frontend.views.main, name='frontend'),

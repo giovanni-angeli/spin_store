@@ -4,6 +4,21 @@ from spin_store.settings import ugettext_lazy as _
 
 validate = jsonschema.validate
 
+example_schema = {
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "properties": {
+        "spin":     {'type': 'boolean', 'description': _("spin")},
+        "charge":   {"type": "string", 'description': _("charge")},
+        "color":    {"type": "string", 'description': _("color")},
+        "momentum": {"type": "integer", 'description': _("momentum")},
+    },
+    "defaults": {
+        "spin": False,
+        "charge": "e",  
+        "color":  "white",
+        "momentum": 0,
+    }
+}
 
 JSONSCHEMAS = {
     'Generic': {
@@ -15,21 +30,7 @@ JSONSCHEMAS = {
             "address": "192.168.23.23",
             "source": "static",
         },
-        'jsonschema': {
-            "$schema": "http://json-schema.org/draft-06/schema#",
-            "properties": {
-                "restart": {'type': 'boolean', 'description': _("if True, the interface is restarted after setting it. optional, default True")},
-                "name": {"type": "string", 'description': _("name of the interface e.g. eth0, required.")},
-                "address": {"type": "string", 'description': _("ip4 address.")},
-                "source": {"type": "string", 'pattern': '(^static$|^dhcp$)', 'description': _("'dhcp' or 'static', optional, default static.")},
-            },
-            "defaults": {
-                "name": None,
-                "address": "",
-                "source": "static",
-                "restart": True,
-            },
-        },
+        'jsonschema': example_schema,
     },
     'Quark': {
         'description': _("Quark's params"),
@@ -40,21 +41,7 @@ JSONSCHEMAS = {
             "address": "192.168.23.23",
             "source": "static",
         },
-        'jsonschema': {
-            "$schema": "http://json-schema.org/draft-06/schema#",
-            "properties": {
-                "restart": {'type': 'boolean', 'description': _("if True, the interface is restarted after setting it. optional, default True")},
-                "name": {"type": "string", 'description': _("name of the interface e.g. eth0, required.")},
-                "address": {"type": "string", 'description': _("ip4 address.")},
-                "source": {"type": "string", 'pattern': '(^static$|^dhcp$)', 'description': _("'dhcp' or 'static', optional, default static.")},
-            },
-            "defaults": {
-                "name": None,
-                "address": "",
-                "source": "static",
-                "restart": True,
-            },
-        },
+        'jsonschema': example_schema,
     },
     'Lepton': {
         'description': _("Lepton's params"),
@@ -65,21 +52,7 @@ JSONSCHEMAS = {
             "address": "192.168.23.23",
             "source": "static",
         },
-        'jsonschema': {
-            "$schema": "http://json-schema.org/draft-06/schema#",
-            "properties": {
-                "restart": {'type': 'boolean', 'description': _("if True, the interface is restarted after setting it. optional, default True")},
-                "name": {"type": "string", 'description': _("name of the interface e.g. eth0, required.")},
-                "address": {"type": "string", 'description': _("ip4 address.")},
-                "source": {"type": "string", 'pattern': '(^static$|^dhcp$)', 'description': _("'dhcp' or 'static', optional, default static.")},
-            },
-            "defaults": {
-                "name": None,
-                "address": "",
-                "source": "static",
-                "restart": True,
-            },
-        },
+        'jsonschema': example_schema,
     },
     'ScalarBoson': {
         'description': _("ScalarBoson's params"),
@@ -90,21 +63,7 @@ JSONSCHEMAS = {
             "address": "192.168.23.23",
             "source": "static",
         },
-        'jsonschema': {
-            "$schema": "http://json-schema.org/draft-06/schema#",
-            "properties": {
-                "restart": {'type': 'boolean', 'description': _("if True, the interface is restarted after setting it. optional, default True")},
-                "name": {"type": "string", 'description': _("name of the interface e.g. eth0, required.")},
-                "address": {"type": "string", 'description': _("ip4 address.")},
-                "source": {"type": "string", 'pattern': '(^static$|^dhcp$)', 'description': _("'dhcp' or 'static', optional, default static.")},
-            },
-            "defaults": {
-                "name": None,
-                "address": "",
-                "source": "static",
-                "restart": True,
-            },
-        },
+        'jsonschema': example_schema,
     },
     'GaugeBoson': {
         'description': _("GaugeBoson's params"),
@@ -115,20 +74,6 @@ JSONSCHEMAS = {
             "address": "192.168.23.23",
             "source": "static",
         },
-        'jsonschema': {
-            "$schema": "http://json-schema.org/draft-06/schema#",
-            "properties": {
-                "restart": {'type': 'boolean', 'description': _("if True, the interface is restarted after setting it. optional, default True")},
-                "name": {"type": "string", 'description': _("name of the interface e.g. eth0, required.")},
-                "address": {"type": "string", 'description': _("ip4 address.")},
-                "source": {"type": "string", 'pattern': '(^static$|^dhcp$)', 'description': _("'dhcp' or 'static', optional, default static.")},
-            },
-            "defaults": {
-                "name": None,
-                "address": "",
-                "source": "static",
-                "restart": True,
-            },
-        },
+        'jsonschema': example_schema,
     },
 }

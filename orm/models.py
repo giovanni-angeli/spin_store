@@ -24,7 +24,7 @@ class BaseModel(models.Model):
     _parameters = models.TextField(_(u'parameters'), null=False, blank=True, db_column='parameters', default="{}")
     
     creation_date = models.DateTimeField(default=timezone.now)
-    deletion_date = models.DateTimeField(default=lambda : timezone.now() + datetime.timedelta(days=365*10+2))
+    deletion_date = models.DateTimeField(default=timezone.now() + datetime.timedelta(days=365*10+2))
 
     def __str__(self):
         return self.ui_name

@@ -80,7 +80,8 @@ WSGI_APPLICATION = 'spin_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'test', 'db.sqlite3'),
+        'NAME': "/var/opt/spin_store/spin_store.sqlite3",
+        # ~ 'NAME': os.path.join(BASE_DIR, 'test', 'db.sqlite3'),
     }
 }
 
@@ -132,4 +133,39 @@ REDIS_URL = 'redis://localhost:6379/0'
 
 def ugettext_lazy(s):
     return s
+
+ # ~ Django Suit configuration example
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'Django Suit',
+    'HEADER_DATE_FORMAT': 'l, j. F Y',
+    'HEADER_TIME_FORMAT': 'H:i',
+
+    # forms
+    # 'SHOW_REQUIRED_ASTERISK': True,  # Default True
+    # 'CONFIRM_UNSAVED_CHANGES': True, # Default True
+
+    # menu
+    # 'SEARCH_URL': '/admin/auth/user/',
+    # 'MENU_ICONS': {
+    #    'sites': 'icon-leaf',
+    #    'auth': 'icon-lock',
+    # },
+    # 'MENU_OPEN_FIRST_CHILD': True, # Default True
+    'MENU_EXCLUDE': ('auth.group',),
+    'MENU': (
+        'sites',
+        {'label': 'Bose Einstein', 'icon':'icon-cog', 'models': ('orm.GaugeBoson', 'orm.ScalarBoson')},
+        {'label': 'Fermi Dirac', 'icon':'icon-cog', 'models': ('orm.Lepton', 'orm.Quark')},
+    ),
+    # 'MENU': (
+    #     'sites',
+    #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
+    #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
+    #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
+    # ),
+
+    # misc
+    # 'LIST_PER_PAGE': 15
+}
 

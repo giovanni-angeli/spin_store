@@ -18,7 +18,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 # Get version
-with open(path.join(here, '__version__'), encoding='utf-8') as f:
+with open(path.join(here, 'spin_store', '__version__'), encoding='utf-8') as f:
     __version__ = f.read().strip()
 
 SETUP_KW_ARGS = {
@@ -41,25 +41,34 @@ SETUP_KW_ARGS = {
     ],
     'packages': find_packages(exclude=['docs', 'tests', 'tmp']),  # Required
     'install_requires': [
-        "Django",           #==1.11
-        "django-suit",      #==0.2.25
+        "Django==1.11",     #==1.11
+        "django-suit==0.2.25",      #==0.2.25
         "jsonschema",       #==2.6.0
-        # ~ "nose2",            #==0.7.3
-        # ~ "pytz",             #==2017.3
     ],
     
     'include_package_data': True,    # include everything in source control
-    'exclude_package_data': {'*': ['__pycache__']},
+    # ~ 'exclude_package_data': {'*': ['__pycache__']},
     
     'package_data': { 
+        'orm': [
+            'management/spin_store.sqlite3',
+        ],
         'spin_store': [
+            'manage.py', 
             '__version__', 
-            'frontend'
+            'frontend/static/js/*',
+            'frontend/static/css/*',
+            'frontend/static/images/*',
+            'frontend/static/bootstrap/css/*',
+            'frontend/static/bootstrap/js/*',
+            'frontend/static/bootstrap/fonts/*',
+            'static/js/*',
+            'templates/*',
         ],
     },
     'entry_points': {  # Optional
         'console_scripts': [
-            'spin_store=spin_store:main',
+            'spin_store_manage=spin_store.manage:main',
         ],
     },
 }
