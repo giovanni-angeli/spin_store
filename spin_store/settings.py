@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'orm',
     'spin_store.frontend',
-    'spin_store.administration',
+    'spin_store.spin_admin',
 ]
 
 MIDDLEWARE = [

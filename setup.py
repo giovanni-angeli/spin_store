@@ -44,6 +44,8 @@ SETUP_KW_ARGS = {
         "Django==1.11",     #==1.11
         "django-suit==0.2.25",      #==0.2.25
         "jsonschema",       #==2.6.0
+        # ~ "pkg-resources==0.0.0",
+        # ~ "pytz==2017.3        ",
     ],
     
     'include_package_data': True,    # include everything in source control
