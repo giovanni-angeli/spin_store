@@ -27,9 +27,6 @@ ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
 VERSION = SETUP_KW_ARGS["version"]
 APP_NAME = SETUP_KW_ARGS["name"]
 
-here = os.path.dirname(__file__)
-sys.path.append(os.path.join('..', here, 'devices')) 
-
 from maker import main
 
 main(root_path=ROOT_PATH,
