@@ -11,9 +11,9 @@ os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
 from setup import SETUP_KW_ARGS
 
 if six.PY3:
-    PY_VENV_PATH = "/opt/venvs/py3venv"  # where to create/use virtual env
+    PY_VENV_PATH = "/opt/venvs/py3spin_store"  # where to create/use virtual env
 if six.PY2:
-    PY_VENV_PATH = "/opt/venvs/py2venv"  # where to create/use virtual env
+    PY_VENV_PATH = "/opt/venvs/py2spin_store"  # where to create/use virtual env
 
 TARGET_URL = "admin@192.168.0.100"
 TARGET_PY_VENV_PATH = "/home/admin/py27venv"

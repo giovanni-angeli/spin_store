@@ -4,7 +4,7 @@
 an example of django application using jsonschema on top of django models
 
 
-## To build, install, test and run (for development):
+## To build, install, test (for development):
 
 ```
     # READ and EDIT make.py, then::
@@ -34,4 +34,16 @@ It is a wrapper instantiating the Maker class after setting some project-specifi
 The Maker uses standard [python packaging tools](https://packaging.python.org) under the hood to build the distributable package (the python wheel) and 
     uses [nose2](http://nose2.readthedocs.io/en/latest/index.html) to run tests.
 
-*make.py* and *maker.py* are, in the whole, less than 200 lines of code, you should **read**, **use** and **adapt** them.
+*make.py* and *maker.py* are, in the whole, less than 200 lines of code, developer should read, use and adapt them to her/his needs.
+
+
+### To run:
+
+```
+    # export the path to the py virtualenv you created via 'make create_venv'
+    export PATH_TO_VENV=/opt/venvs/py3spin_store
+    (. $PATH_TO_VENV/bin/activate ; python ./spin_store/manage.py migrate)
+    (. $PATH_TO_VENV/bin/activate ; python ./spin_store/manage.py createsuperuser)
+    (. $PATH_TO_VENV/bin/activate ; python ./spin_store/manage.py runserver localhost:8008)
+```
+  

@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'spin_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': "/var/opt/spin_store/spin_store.sqlite3",
+        'NAME': "/opt/run/spin_store/spin_store.sqlite3",
         # ~ 'NAME': os.path.join(BASE_DIR, 'test', 'db.sqlite3'),
     }
 }
