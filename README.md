@@ -34,7 +34,7 @@ It is a wrapper instantiating the Maker class after setting some project-specifi
 The Maker uses standard [python packaging tools](https://packaging.python.org) under the hood to build the distributable package (the python wheel) and 
     uses [nose2](http://nose2.readthedocs.io/en/latest/index.html) to run tests.
 
-*make.py* and *maker.py* are, in the whole, less than 200 lines of code, developer should read, use and adapt them to her/his needs.
+*make.py* and *maker.py* are, in the whole, less than 200 lines of code; the developer should read, use and adapt them to her/his needs.
 
 
 ### To run:
