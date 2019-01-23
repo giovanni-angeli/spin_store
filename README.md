@@ -42,6 +42,7 @@ The Maker uses standard [python packaging tools](https://packaging.python.org) u
 ```
     # export the path to the py virtualenv you created via 'make create_venv'
     export PATH_TO_VENV=/opt/venvs/py3spin_store
+    (. $PATH_TO_VENV/bin/activate ; python ./spin_store/manage.py makemigrations)
     (. $PATH_TO_VENV/bin/activate ; python ./spin_store/manage.py migrate)
     (. $PATH_TO_VENV/bin/activate ; python ./spin_store/manage.py createsuperuser)
     (. $PATH_TO_VENV/bin/activate ; python ./spin_store/manage.py runserver localhost:8008)

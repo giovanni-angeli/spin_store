@@ -10,6 +10,52 @@ from orm.jsonschemas import validate
 
 from spin_store.settings import ugettext_lazy as _
 
+from django import forms
+
+class ParamsForm(object):
+
+    def __init__(self, schema_properties, defaults=None):
+
+        self.schema_properties = schema_properties
+        self.defaults = defaults
+
+    def handle_input(self, form):
+        _params = {}
+        for k, v in form.data.items():
+            if k.startswith('_params_'):
+                
+                key = "_".join(k.split('_')[2:])
+
+                self.schema_properties[key]
+
+                try:
+                    _params[key] = json.loads(v)
+                except:
+                    _params[key] = v
+        return _params
+        
+    def render(self):
+        html_head = """
+        <div class="form-row field-params">
+        """ 
+
+        html_foot = """
+        </div>
+        """
+
+        html_body = ""
+        for k, v in self.schema_properties.items():
+            val = self.defaults.get(k)
+            html_body += """
+            <div class="fieldBox field-{key}">
+                <label class="required" for="id_{key}">{key} {type}:</label>
+                <input type="text" name="_params_{key}" value={val} class="TextField" maxlength="200" required id="id_{key}"></input>
+            </div>
+            """.format(key=k, val=json.dumps(val), type=v.get('type'))
+
+        html_ = html_head + html_body + html_foot
+        return mark_safe(html_)
+
 class BaseModelAdmin(admin.ModelAdmin):
     
     list_display = ('ui_name', 'creation_date', 'deletion_date', 'parameters', 'tenant_id')
@@ -27,12 +73,14 @@ class BaseModelAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
 
         _schema = self._get_parameters_jsonschema()
-        params_content = request.POST.get('params_content', "{}")
-        _params = json.loads(params_content)
-        logging.warning("save_model() obj:{}, _params({}):{}, _schema:{}".format(obj, type(_params), _params, _schema))
 
-        validate(params_content, _schema)
+        properties = _schema.get('properties', {})
+        params_form = ParamsForm(properties)
+        _params = params_form.handle_input(form)
 
+        logging.warning("save_model() request:{}, obj:{}, change:{}, form.data:{}, _params:{}".format(request, obj, change, form.data, _params))
+
+        validate(_params, _schema)
         obj.set_parameters(_params)
 
         return super().save_model(request, obj, form, change)
@@ -42,21 +90,21 @@ class BaseModelAdmin(admin.ModelAdmin):
         _schema = self._get_parameters_jsonschema()
 
         if object_id is not None and self._get_object(object_id):
-            _parameters = self._get_object(object_id).get_parameters()
+            defaults = self._get_object(object_id).get_parameters()
         else:
-            _parameters = _schema.get('defaults', {})
-            
-        _schema     = json.dumps(_schema)
-        _parameters = json.dumps(_parameters)
+            defaults = _schema.get('defaults', {})
+
+        properties = _schema.get('properties', {})
+        params_form = ParamsForm(properties, defaults)
+
+        logging.warning("changeform_view() properties:{}, defaults:{}".format(properties, defaults))
+
         if extra_context is None:
             extra_context = {}
         extra_context.update({
-            'jsonschema': mark_safe(_schema),
-            'params': mark_safe(_parameters),
+            'params_form_html': params_form.render(),
             'editor_section_title': _(self.__class__.__name__)
         })
-        logging.warning("changeform_view() extra_context:{}".format(extra_context))
-
         return super().changeform_view(request, object_id, form_url, extra_context)
 
     def _get_object(self, object_id): # virtual protected

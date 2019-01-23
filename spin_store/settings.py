@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'suit',
+    # ~ 'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,6 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': "/opt/run/spin_store/spin_store.sqlite3",
+        # ~ (spinadmin, spinadmin)
         # ~ 'NAME': os.path.join(BASE_DIR, 'test', 'db.sqlite3'),
     }
 }

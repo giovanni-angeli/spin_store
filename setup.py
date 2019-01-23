@@ -41,8 +41,10 @@ SETUP_KW_ARGS = {
     ],
     'packages': find_packages(exclude=['docs', 'tests', 'tmp']),  # Required
     'install_requires': [
-        "Django==1.11",     #==1.11
-        "django-suit==0.2.25",      #==0.2.25
+        # ~ "Django==1.11",     #==1.11
+        "Django",     #==1.11
+        # ~ "django-suit==0.2.25",      #==0.2.25
+        # ~ "django-suit",      #==0.2.25
         "jsonschema",       #==2.6.0
         # ~ "pkg-resources==0.0.0",
         # ~ "pytz==2017.3        ",

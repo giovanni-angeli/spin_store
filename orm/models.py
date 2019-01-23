@@ -60,7 +60,7 @@ class BaseModel(models.Model):
 
         _jsonschema = self.get_parameters_jsonschema()
         
-        logging.debug("set_parameters() self:{}, validating  params({}):{}, schema:{}".format(self, type(params), params, _jsonschema))
+        logging.warning("set_parameters() self:{}, validating  params({}):{}, schema:{}".format(self, type(params), params, _jsonschema))
 
         if isinstance(params, str):
             params = json.loads(params)
