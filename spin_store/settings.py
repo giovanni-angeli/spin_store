@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import logging
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,10 +24,28 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(db8+g1s$v6^78iew1$e9cr4l@2tic5eoy0m+g398zy_^(y4-$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# ~ DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', ]
 
+def set_logging(log_level):
+    fmt_ = logging.Formatter('[%(asctime)s]'
+                             '%(name)s:'
+                             '%(levelname)s:'
+                             '%(funcName)s() '
+                             '%(filename)s:'
+                             '%(lineno)d: '
+                             '%(message)s ')
+
+    ch = logging.StreamHandler()
+    ch.setFormatter(fmt_)
+    logger_ = logging.getLogger()
+    logger_.handlers = []
+    logger_.addHandler(ch)
+    logger_.setLevel(log_level)
+
+set_logging("INFO")
 
 # Application definition
 

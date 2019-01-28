@@ -10,8 +10,6 @@ from django.utils import timezone
 
 from spin_store.settings import ugettext_lazy as _
 
-from orm.jsonschemas import JSONSCHEMAS, validate
-
 
 class BaseModel(models.Model):
 
@@ -21,54 +19,23 @@ class BaseModel(models.Model):
     id = models.UUIDField(verbose_name=_('UUID'), default=uuid.uuid4, primary_key=True, unique=True, null=False, blank=False, editable=False)
     ui_name = models.CharField(verbose_name=_('name'), max_length=200)
     tenant_id = models.UUIDField(verbose_name=_('tenant\'s uuid'), null=True, blank=True, editable=False)
-    _parameters = models.TextField(_(u'parameters'), null=False, blank=True, db_column='parameters', default="{}")
+    _parameters = models.TextField(_('parameters'), null=False, blank=True, db_column='parameters', default="{}")
+    parameters_schema_name = models.CharField(verbose_name=_('jsonschema name'), max_length=200, default='Generic')
     
     creation_date = models.DateTimeField(default=timezone.now)
     deletion_date = models.DateTimeField(default=timezone.now() + datetime.timedelta(days=365*10+2))
 
     def __str__(self):
         return self.ui_name
-    
-    @classmethod
-    def get_parameters_jsonschema(cls, cls_name=None):
-        
-        if cls_name is None:
-            cls_name  = cls.__name__
-        
-        if JSONSCHEMAS.get(cls_name):
-            return JSONSCHEMAS[cls_name]['jsonschema']
-        else:
-            return JSONSCHEMAS['Generic']['jsonschema']
 
-        
-    @classmethod
-    def reset_parameters_to_default(cls):
-        
-        cls._parameters = json.dumps({"name": "undefined"}, indent=4)
-        
     def get_parameters(self):
-        
-        _jsonschema = self.get_parameters_jsonschema()
         _parameters = json.loads(self._parameters)
-        validate(_parameters, _jsonschema)
-        
-        logging.debug("get_parameters() _parameters:{}".format(_parameters))
-        
         return _parameters
     
     def set_parameters(self, params):
-
-        _jsonschema = self.get_parameters_jsonschema()
-        
-        logging.warning("set_parameters() self:{}, validating  params({}):{}, schema:{}".format(self, type(params), params, _jsonschema))
-
         if isinstance(params, str):
             params = json.loads(params)
-        
         assert isinstance(params, dict)
-        
-        validate(params, _jsonschema)
-    
         self._parameters = json.dumps(params, indent=4)
         
     parameters = property(get_parameters, set_parameters)
@@ -105,4 +72,8 @@ class Table(models.Model):
 class Device(models.Model):
 
     pass
-    
+
+
+class Command(BaseModel):
+
+    pass
